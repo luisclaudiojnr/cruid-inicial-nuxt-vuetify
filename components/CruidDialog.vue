@@ -47,7 +47,7 @@
                       v-model="objeto[`${campo.value}`]" 
                       ></v-text-field>                  
 
-                  <v-autocomplete v-if="isObject(campo)" :items="fieldsObjets[`${campo.value}`]" item-text="name" 
+                  <v-autocomplete v-if="isObject(campo)" :items="fieldsObjets[`${campo.value}`]" item-text="nome" 
                     item-value="id" :label="campo.text"
                     auto-select-first v-model="objeto[`${campo.value}`]"                     
                     :rules="[v => !!v || `Selecione um ${campo.text}`]" >
@@ -123,6 +123,12 @@ export default {
             this.objeto[`${campo.value}`] =  val[`${campo.value}`].toISOString().substr(0, 10) 
             this.camposData[`${campo.value}`] = moment(this.objeto[`${campo.value}`]).format('DD/MM/YYYY')          
           }
+          // if(campo.type==='Object'){
+
+          //   //this.fieldsObjets(val[`${campo.value}`])
+          //   //this.objeto[`${campo.value}`] = val[`${campo.value}`].id
+          //   console.log( val[`${campo.value}`])
+          // }
         })       
       }
     }   
@@ -155,9 +161,9 @@ export default {
         }
       })
     },
-    openDialog(){
-      console.log(!!this.editVenda.cliente)
-    },
+    // openDialog(){
+    //   console.log(!!this.editVenda.cliente)
+    // },
     close(){      
       // document.getElementById('valorVenda').value = '0,00';
       // document.getElementById('pesoTotal').value = '0,000';
@@ -174,15 +180,17 @@ export default {
     save(){
       if(this.$refs.form.validate()){
         // this.venda.dataVenda = moment(this.venda.dataVenda).format('DD/MM/YYYY')
-        // this.objeto.id = Math.random() * (100 - 4) + 4;     
+        // this.objeto.id = Math.random() * (100 - 4) + 4; 
 
-        this.$emit("saveObject", this.objeto)
+        this.$emit("saveObject", this.objeto, this.fieldsObjets)
         this.close() 
       }          
     },
     edit(){
+      //console.log(this.objeto)
+
       if(this.$refs.form.validate()){   
-        this.$emit("editObject", this.objeto) 
+        this.$emit("editObject", this.objeto, this.fieldsObjets) 
         this.close()     
       }
     },
@@ -207,39 +215,22 @@ export default {
 
     loadObjects(value){
       const temp =[]
+      //console.log(value)
 
-      this.$axios(`${value}s.json`).then(res =>{
+      this.$axios(`${value}.json`).then(res =>{
         //console.log("cruid dialog",res.data)
-        if(res.data){
-            for(let chave in res.data){
-              //console.log('cavhe',res.data[chave])
+        if(res.data){          
+            for(let chave in res.data){              
               temp.unshift({
                 id:chave,
-                name:res.data[chave].nome
+                ...res.data[chave]
               })
             }
           }
       })
 
       this.fieldsObjets[`${value}`] = temp
-      console.log('fieldsObject',this.fieldsObjets)
-      
-
-
-      // console.log('teste', value)
-      // if(value == 'cliente'){
-      //   this.fieldsObjets[`${value}`] =[
-      //     {id:1, name:"Joao Paga a Vista"},
-      //     {id:2, name:"Jose Veaco"},
-      //     {id:3, name:"Gigante Atacadista"}
-      //   ]
-      // }else if(value == 'categoria'){
-      //   this.fieldsObjets[`${value}`] =[
-      //     {id:1, name:"Ração"},
-      //     {id:2, name:"Qualidade da agua"},
-      //     {id:3, name:"Alevinagem"}
-      //   ]
-      // }
+      //console.log('fieldsObject',this.fieldsObjets)      
     }
   },
   directives: {money: VMoney}

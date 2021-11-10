@@ -2,12 +2,12 @@
     <v-app>
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-img
+      <!-- <v-img
         max-height="30"
         max-width="30"
         src="../assets/logo.png"
         class="mr-3"
-      ></v-img>
+      ></v-img> -->
       <v-toolbar-title>Fish Farm</v-toolbar-title>
     </v-app-bar>
 
