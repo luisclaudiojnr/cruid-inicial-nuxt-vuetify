@@ -129,7 +129,14 @@ export default {
   },
   created(){    
     this.initialize()
-    this.dialog = false   
+    this.dialog = false  
+
+    this.campos.map( campo => {
+      //console.log('campo', campo)
+      if(campo.type === 'Object'){        
+        this.loadObjects(campo.value)
+      }
+    })
   }, 
   methods:{   
     initialize(){      
@@ -190,7 +197,7 @@ export default {
 
     isObject(campo){
       if(campo.type ==='Object'){
-        this.loadObjects(campo.value)
+        //this.loadObjects(campo.value)
         return true
       }
       else {
@@ -199,19 +206,40 @@ export default {
     },
 
     loadObjects(value){
-      if(value == 'cliente'){
-        this.fieldsObjets[`${value}`] =[
-          {id:1, name:"Joao Paga a Vista"},
-          {id:2, name:"Jose Veaco"},
-          {id:3, name:"Gigante Atacadista"}
-        ]
-      }else if(value == 'categoria'){
-        this.fieldsObjets[`${value}`] =[
-          {id:1, name:"Ração"},
-          {id:2, name:"Qualidade da agua"},
-          {id:3, name:"Alevinagem"}
-        ]
-      }
+      const temp =[]
+
+      this.$axios(`${value}s.json`).then(res =>{
+        //console.log("cruid dialog",res.data)
+        if(res.data){
+            for(let chave in res.data){
+              //console.log('cavhe',res.data[chave])
+              temp.unshift({
+                id:chave,
+                name:res.data[chave].nome
+              })
+            }
+          }
+      })
+
+      this.fieldsObjets[`${value}`] = temp
+      console.log('fieldsObject',this.fieldsObjets)
+      
+
+
+      // console.log('teste', value)
+      // if(value == 'cliente'){
+      //   this.fieldsObjets[`${value}`] =[
+      //     {id:1, name:"Joao Paga a Vista"},
+      //     {id:2, name:"Jose Veaco"},
+      //     {id:3, name:"Gigante Atacadista"}
+      //   ]
+      // }else if(value == 'categoria'){
+      //   this.fieldsObjets[`${value}`] =[
+      //     {id:1, name:"Ração"},
+      //     {id:2, name:"Qualidade da agua"},
+      //     {id:3, name:"Alevinagem"}
+      //   ]
+      // }
     }
   },
   directives: {money: VMoney}

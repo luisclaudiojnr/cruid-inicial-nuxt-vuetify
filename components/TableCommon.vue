@@ -11,7 +11,7 @@
 
             <v-spacer></v-spacer>
             
-            <CruidDialog :campos="camposDialog" :title="title" :textoBtn="textoBtn" :dialogEdit="dialogEdit"                    
+            <CruidDialog :campos="camposDialog" :subCampos="subCampos" :title="title" :textoBtn="textoBtn" :dialogEdit="dialogEdit"                    
                   @saveObject="saveObject"
                   @dialogEdit="dialogEdit=$event"
                   @editObject="$emit('editObject', $event)"
@@ -91,13 +91,14 @@ export default {
       objs:Array,
       title:String,
       textoBtn: String,
+      subObjs:Array
     },
     data: () => ({
         dialogDelete: false,
         dialogEdit: false,
         itemDelete:{},
         camposDialog:[],
-        categorias:[]
+        subCampos:[]
     }),
     created(){
       this.initialize()      
@@ -105,9 +106,10 @@ export default {
     methods:{    
       initialize(){
         this.camposDialog = this.headers  
-        this.categorias =[{
+        // this.subCampos =[{
           
-        }]      
+        // }]      
+        //console.log(this.objs)
       },    
       saveObject(e){        
         this.$emit("saveObject", e)

@@ -60,7 +60,7 @@ export default {
       fixed: false,
       items: [
           { title: 'Dashboard', icon: 'mdi-view-dashboard', to:'/' },
-          { title: 'Viveiros', icon: 'mdi-waves', to:'/viveiros' },
+          { title: 'Ativos', icon: 'mdi-waves', to:'/ativos' },
           { title: 'Clientes', icon: 'mdi-account-heart', to: '/clientes'},
           { title: 'Vendas', icon: 'mdi-cash-plus', to:'/vendas' },
           { title: 'Despesas', icon: 'mdi-cash-minus', to:'/despesas' },
