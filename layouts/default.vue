@@ -60,8 +60,7 @@ export default {
       fixed: false,
       items: [
           { title: 'Dashboard', icon: 'mdi-view-dashboard', to:'/' },
-          { title: 'Ativos', icon: 'mdi-waves', to:'/ativos' },
-          { title: 'Clientes', icon: 'mdi-account-heart', to: '/clientes'},
+          { title: 'Produtos', icon: 'mdi-cow', to:'/produtos' },
           { title: 'Vendas', icon: 'mdi-cash-plus', to:'/vendas' },
           { title: 'Despesas', icon: 'mdi-cash-minus', to:'/despesas' },
           { title: 'Categorias de Despesas', icon: 'mdi-tag-multiple', to: '/categorias'},

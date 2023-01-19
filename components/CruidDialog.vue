@@ -50,7 +50,7 @@
                   <v-autocomplete v-if="isObject(campo)" :items="fieldsObjets[`${campo.value}`]" item-text="nome" 
                     item-value="id" :label="campo.text"
                     auto-select-first v-model="objeto[`${campo.value}`]"                     
-                    :rules="[v => !!v || `Selecione um ${campo.text}`]" >
+                     >
                   </v-autocomplete>
 
                   <v-checkbox v-if="campo.type=='Bool'"
@@ -58,7 +58,7 @@
                     :label="campo.text"
                   ></v-checkbox>
 
-
+                  
                   
                 </v-col>
           <!--  <v-col cols="12" sm="6" md="4">
@@ -117,12 +117,16 @@ export default {
         this.campos.map(campo => {
           this.objeto.id = val.id
           if(campo.value !== 'actions'){
-            this.objeto[`${campo.value}`] = val[`${campo.value}`]  
+            this.objeto[`${campo.value}`] = val[`${campo.value}`]
+              //console.log(campo.value)
+ 
           }
           if(campo.type==='Date'){
-            this.objeto[`${campo.value}`] =  val[`${campo.value}`].toISOString().substr(0, 10) 
+            //console.log('campo é Date ', val[`${campo.value}`])
+            this.objeto[`${campo.value}`] =  val[`${campo.value}`]//.toISOString().substr(0, 10) 
             this.camposData[`${campo.value}`] = moment(this.objeto[`${campo.value}`]).format('DD/MM/YYYY')          
           }
+
           // if(campo.type==='Object'){
 
           //   //this.fieldsObjets(val[`${campo.value}`])
@@ -180,9 +184,10 @@ export default {
     save(){
       if(this.$refs.form.validate()){
         // this.venda.dataVenda = moment(this.venda.dataVenda).format('DD/MM/YYYY')
-        // this.objeto.id = Math.random() * (100 - 4) + 4; 
+        // this.objeto.id = Math.random() * (100 - 4) + 4;         
 
-        this.$emit("saveObject", this.objeto, this.fieldsObjets)
+        this.$emit("saveObject", this.objeto, this.fieldsObjets)        
+        
         this.close() 
       }          
     },
@@ -215,7 +220,6 @@ export default {
 
     loadObjects(value){
       const temp =[]
-      //console.log(value)
 
       this.$axios(`${value}.json`).then(res =>{
         //console.log("cruid dialog",res.data)
@@ -228,8 +232,14 @@ export default {
             }
           }
       })
+      const obj = {id:"001", nome:"Sem registro"}
+      temp.unshift({...obj})
+       
+      //console.log(temp)
 
+      //this.fieldsObjets[`${value}`] = temp
       this.fieldsObjets[`${value}`] = temp
+      //console.log(this.fieldsObjets[`${value}`])
       //console.log('fieldsObject',this.fieldsObjets)      
     }
   },
