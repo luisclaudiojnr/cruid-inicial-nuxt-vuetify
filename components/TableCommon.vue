@@ -135,7 +135,7 @@ export default {
       },
       writeItem(item){
         const type = {}.toString.call(item).split(' ')[1].slice(0, -1).toLowerCase() 
-        return type === 'date' ? this.formatData(item) : type ==='boolean' ? '' : item.name ? item.name : item        
+        return type === 'date' ? this.formatData(item) : type ==='boolean' ? '' : item.nome ? item.nome : item        
       }
     }
 
